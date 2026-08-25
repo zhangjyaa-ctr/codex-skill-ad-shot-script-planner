@@ -1,0 +1,5 @@
+interface:
+  display_name: "广告视频脚本策划"
+  short_description: "Create two ad shot script versions"
+  default_prompt: "Use $ad-shot-script-planner to create two versions of a video ad shot script from my project information."
+
