@@ -1,6 +1,6 @@
 ---
 name: ad-shot-script-planner
-description: Create structured video advertising scripts and storyboards in two default versions or a requested continuous visual-script format. Use when the user asks for 商业广告脚本, 视频广告脚本方案, 分镜脚本, 脚本策划, shot-by-shot script, 镜头描述, 转场方式, 两种版本, 连续画面脚本, 时间轴画面脚本, 示例格式, 不要表格, 每个镜头单独生成, AI视频脚本, or wants cinematic ad director-style shot planning.
+description: Create video advertising scripts in cinematic, technical or timestamped video-prompt formats. Use for 商业广告脚本, 分镜脚本, 脚本策划, shot-by-shot scripts, 镜头描述, 转场方式, 时间戳提示词, 整段视频生成提示词, or matching a supplied script format.
 ---
 
 # Ad Shot Script Planner
@@ -14,9 +14,9 @@ Create two script versions by default:
 1. **Version 1: cinematic narrative storyboard script** with style notes, atmosphere, product tone, important requirements, then individual shots with rich visual description and purposeful transition / connection design.
 2. **Version 2: technical shot-planning script** based on the screenshot-style fields, but written as separate shot blocks, never as a table, and with practical transition / connection guidance for editing.
 
-When the user asks for **连续画面脚本**, **时间轴画面脚本**, or supplies the matching title + timestamp + prose format, use the Continuous Visual Script Format below. Output only that requested format unless the user asks for additional versions.
+When the user asks for **时间戳提示词**, **时间戳视频提示词**, **整段视频生成提示词**, or supplies the matching overall brief + `0-5秒：` action paragraphs + global direction format, use the Timestamp Video Prompt Format below. Output only that requested format unless additional versions are requested. A timestamp alone does not select this mode; follow the user's requested structure.
 
-Do not write the output as one long paragraph. Do not use tables. Each shot must be generated as its own clearly separated block.
+Do not write the output as one long paragraph. Do not use tables. Separate individual shots in storyboard modes; separate time segments in timestamp-prompt mode, where a segment may contain several connected shots.
 
 ## Intake
 
@@ -33,7 +33,7 @@ If the user provides incomplete information, make reasonable assumptions and sta
 
 ## Output Requirements
 
-Output **two versions by default**. An explicitly requested version count or format takes precedence; do not append the default pair to a requested continuous visual script.
+Output **two versions by default**. An explicitly requested version count or format takes precedence; do not append the default pair to a requested timestamp video prompt.
 
 Use Chinese by default.
 
@@ -45,7 +45,7 @@ Keep the script feasible for AI video generation. Avoid exact hand interactions,
 
 ## Transition / Connection Design Rules
 
-Transition / connection design is not limited to visual effects. It can describe direct cut, natural cut, sound bridge, action match, gaze match, match cut, texture match, graphic transition, or **head-tail camera movement between adjacent shots**. In the continuous visual format, integrate visual connections into the prose instead of adding a separate field; omit audio directions for picture-only requests.
+Transition / connection design is not limited to visual effects. It can describe direct cut, natural cut, sound bridge, action match, gaze match, match cut, texture match, graphic transition, or **head-tail camera movement between adjacent shots**. In the timestamp-prompt format, integrate visual connections into the prose instead of adding a separate field; omit audio directions for picture-only requests.
 
 Do not design a decorative transition for every shot. Only create a designed transition or connection when it genuinely improves continuity, emphasizes a selling point, or solves a scene jump.
 
@@ -131,33 +131,17 @@ Field guidance:
 - **背景音乐**: rhythm, instruments, sound design, emotional pacing.
 - **转场 / 衔接设计**: state whether the shot should direct cut/natural cut or use a specific connection design. This may include head-tail camera movement. Do not force decorative transitions between every shot.
 
-## Continuous Visual Script Format
+## Timestamp Video Prompt Format
 
-Use this format when requested, including when the user provides an example with this structure. It is a single script presentation, not an additional creative concept or an automatic third version.
+Read [the timestamp format guide and user-supplied example](references/timestamp-video-prompt-format.md) when using this mode. Its structure is **overall generation brief → timestamped action paragraphs → global camera, editing, visual, audio and consistency directions**.
 
-```text
-{总时长}秒｜{画幅比例及横竖版}｜{镜头总数}个镜头
-
-镜头1｜{画面动作标题}
-{起始时间}–{结束时间}
-{以自然段描述开场构图、主体动作和镜头变化。}
-{写清画面如何发展，以及结尾如何接入下一镜。}
-
-镜头2｜{画面动作标题}
-{起始时间}–{结束时间}
-{延续上一镜的视觉关系，写出本镜的画面过程。}
-```
-
-- Start with the one-line duration / aspect ratio / shot-count header. Use the project's actual values, not fixed defaults from the example.
-- Give every shot a concise, concrete action title, followed by a timestamp on its own line, such as `00:01.5–00:04`. Do not prefix the timestamp with `时长：` or `时间：`.
-- Use compact natural paragraphs in viewing order: opening composition, subject action and camera development, then the closing image or next-shot connection. Include only the detail needed to imagine the shot; avoid turning prose into a checklist.
-- Blend camera movement, angle, focus, material texture, lighting and transitions into the picture description where useful. Do not add separate `画面描述：`, `景别：`, `摄影机运动：`, `转场 / 衔接设计：` or other technical field labels.
-- For picture-only requests, omit subtitles, voice-over, music, sound effects and explanatory preambles. Do not add an `重要要求：无字幕` line to this format.
-- Make opening and closing frames compatible across shots. Direct cuts remain valid; do not force a wipe or an elaborate transition into every shot. Keep action and camera complexity achievable within each allocated duration.
-- Check that shot numbering and the header count agree, timestamps are contiguous without gaps or overlaps, and the final time equals the stated total duration.
-- If the user asks for a client-facing version, retain the visible action and rhythm while simplifying execution detail; do not promise precise effects that have not been established.
-
-Read [the user-supplied seven-shot example](references/continuous-visual-script-example.md) when matching this format's prose and timing. Its brand, ingredients, seven-shot count, 15-second duration, 16:9 ratio and specific transitions are illustrative, not requirements for other projects.
+- Begin directly with `生成一段{总时长}秒、{风格与类型}的{视频内容}。` Include the actual aspect ratio when specified, then establish the overall rhythm and development of the film.
+- Write each time segment as its own paragraph beginning `{起始秒数}-{结束秒数}秒：`, such as `0-5秒：`. Describe visible action, camera development and the resulting state in viewing order. Do not add shot titles, shot-count headers, tables or technical field lists.
+- A time segment is a story beat, not necessarily one shot. It may contain a short sequence of related shots whose actions fit the allotted time. Do not force equal five-second segments or a fixed number of beats.
+- Follow the timeline with natural paragraphs on camera coverage, transitions and editing rhythm, color/light/texture, sound effects and music, then physical behavior and continuity constraints. Tailor these paragraphs to the project; omit audio for picture-only requests and follow any narrower user scope.
+- Anchor character, product and prop identity when first introduced. Carry meaningful state changes forward: a torn package stays torn, a poured-out amount stays reduced, and damage does not reset. Apply realistic physical behavior when the chosen style calls for it.
+- Keep timestamps contiguous from zero to the stated total duration. Align global direction with the timeline; avoid adding unallocated scenes or repeating the same action simply to increase shot density.
+- Reuse the example's format and descriptive method, not its story, thirty-second duration, action-film pace, vehicle details or project-specific prohibitions. In advertising work, brand visibility, subtitles, ending and claims follow the current brief. Writing this prompt does not itself authorize video generation.
 
 ## Shot Count And Duration
 
@@ -167,14 +151,14 @@ If the user gives duration, choose a shot count that fits. If not specified:
 - 15-30 seconds: 6-9 shots
 - 30-60 seconds: 8-14 shots
 
-For AI video, prefer shorter independent shots that can be generated separately.
+For AI video, prefer shorter independent shots that can be generated separately unless the user requests a whole-video timestamp prompt or a continuous generation. In timestamp-prompt mode, these shot-count ranges are optional pacing guidance, not required time-segment counts.
 
 ## Quality Rules
 
 - Make every shot visually specific. Avoid vague lines like "show product features" without scene/action.
 - Use concrete cinematic language: morning light, dust particles, lens flare, shallow depth, macro texture, slow push-in, match cut, rim light, product reveal, energy flow.
 - Keep brand/product message clear, but do not turn the script into a dry feature list.
-- If no subtitles are required, do not include on-screen text directions. In Version 1, state "重要要求：无字幕"; in the continuous visual format, keep only the requested header and shot blocks.
+- If no subtitles are required, do not include on-screen text directions. In Version 1, state "重要要求：无字幕". In timestamp-prompt mode, include the no-subtitle constraint in the closing requirements when requested.
 - If the reference contains a required output format, follow it closely while still avoiding tables.
 - Preserve the user's required visual sequence, if given.
 - Do not invent factual claims, certifications, prices, precise technical specs, or brand slogans unless provided.
